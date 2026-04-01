@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Anniversaire TOUTI</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500&family=Parisienne&display=swap" rel="stylesheet">
+    <!-- Flaticons / FontAwesome (Si besoin pour les icônes) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Confetti & Canvas Confetti JS -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cursor personnalisé -->
+    <div class="cursor" id="custom-cursor"></div>
+    <div class="cursor-follower" id="custom-cursor-follower"></div>
+
+    <!-- ProgressBar de scroll -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Loader -->
+    <div class="loader-wrapper" id="loader">
+        <div class="heart-loader"></div>
+        <p class="loader-text">Chargement des émotions...</p>
+    </div>
+
+    <!-- Background Animé Particules / Etoiles -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Header Navigation (Glassmorphism) -->
+    <header class="glass-nav">
+        <div class="logo">TOUTI</div>
+        <div class="nav-controls">
+
+            <button id="music-toggle" class="nav-btn" aria-label="Toggle Music">
+                <i class="fas fa-music" id="music-icon"></i>
+                <span class="music-wave" id="music-wave">
+                    <span></span><span></span><span></span>
+                </span>
+            </button>
+            <audio id="bg-music" loop preload="auto">
+                <!-- Fallback relaxing music. Use a soft piano track if possible -->
+                <source src="https://cdn.pixabay.com/download/audio/2022/02/22/audio_d1718ab41b.mp3?filename=relaxing-piano-music-248868.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </header>
+
+    <main>
+        <!-- SECTION 1 - HERO -->
+        <section class="hero-section hidden-element fade-in">
+            <div class="hero-content glass-card">
+                <h1 class="hero-title">
+                    <span class="birthday-text">Joyeux anniversaire</span><br>
+                    <span class="name-text gold-gradient">Mon Amie ❤️</span>
+                </h1>
+                <p class="hero-subtitle">Pour moi tu es une personne précieuse. Et je suis très heureuse de t'avoir comme amie.</p>
+                <div class="scroll-indicator">
+                    <span>Découvrir</span>
+                    <i class="fas fa-chevron-down Chevron-animation"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 - STORY -->
+        <section class="story-section hidden-element slide-up">
+            <div class="container text-center max-w-lg mx-auto">
+                <div class="glass-panel p-lg">
+                    <p class="emotional-text font-cormorant">
+                        Je t'ai connue à l'université,<br>
+                        et depuis ce jour j'ai découvert une personne exceptionnelle.
+                    </p>
+                    <div class="spacer-sm"></div>
+                    <p class="emotional-text font-cormorant delay-1">
+                        Une personne calme,<br>
+                        une personne gentille,<br>
+                        une personne qui ne se met jamais en colère,<br>
+                        mais surtout une personne avec un cœur immense.
+                    </p>
+                    <div class="spacer-sm"></div>
+                    <p class="emotional-text font-cormorant delay-2">
+                        Tu fais partie des gens que j'aime le plus et tu ne peux l'imaginer.<br>
+                        Et même quand j'étais au plus bas,<br>
+                        tu étais toujours là pour moi.<br>
+                        J'ai toujours frappé à ta porte et tu m'as toujours ouvert. 
+                    </p>
+                </div>
+            </div>
+            <!-- Parallax Element Background -->
+            <div class="parallax-bg bg-1"></div>
+        </section>
+
+        <!-- SECTION 3 - MESSAGE PROFOND -->
+        <section class="deep-message-section hidden-element fade-in parallax">
+            <div class="blur-overlay">
+                <div class="container text-center text-white">
+                    <h2 class="section-heading font-parisienne text-glow">Quelque chose d'Unique</h2>
+                    <p class="deep-text typewriter italic mt-md">
+                        Je n'ai peut-être jamais pu t'offrir un cadeau matériel, pas parce que je ne le veux pas,<br>
+                        mais parce que je n'ai pas les moyens de t'offrir ce que tu mérites.
+                        Et aujourd'hui je voulais t'offrir quelque chose d'unique.
+                    </p>
+                    <p class="deep-text mt-sm delay-1">
+                        Quelque chose qui ne s’use pas.<br>
+                        Quelque chose qui reste.<br>
+                        Quelque chose qui montre combien tu comptes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 - LETTRE -->
+        <section class="letter-section hidden-element zoom-in">
+            <div class="container flex-center">
+                <div class="envelope-wrapper" id="envelope">
+                    <div class="envelope">
+                        <div class="front flap"></div>
+                        <div class="front pocket"></div>
+                        <div class="letter">
+                            <h3 class="letter-title font-cormorant">TOUTI,</h3>
+                            <p>Tu es une oreille attentive pour moi,<br> tu respectes mes choix et tu me soutiens dans tout ce que j'entreprends.</p>
+                            <p>Tu es une personne gentille,<br> tu es une personne douce 😂,<br> mais très attentionnée.</p>
+                            <p>J'ai aimé les moments d'école avec toi,<br> tu es devenue une sœur pour moi.</p>
+                            <p class="letter-highlight text-glow-gold mt-sm">Tu es une bénédiction pour les personnes qui ont la chance de te connaître.</p>
+                        </div>
+                        <div class="envelope-seal">
+                            <i class="fas fa-heart text-white"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="instruction-text mt-md glow-pulse">Cliquer sur l'enveloppe pour l'ouvrir</p>
+            </div>
+        </section>
+
+        <!-- SECTION 5 - SOUHAITS -->
+        <section class="wishes-section">
+            <div class="container">
+                <h2 class="section-title text-center font-cormorant gold-gradient hidden-element slide-up">Mes Souhaits Pour Toi</h2>
+                <div class="wishes-grid mt-lg">
+                    <div class="wish-card glass-panel hidden-element slide-right delay-1">
+                        <i class="fas fa-sun wish-icon text-gold"></i>
+                        <p>Une relation où tu seras vraiment aimée et tu te sentiras REINE parce que tu le mérites vraiment et un peu moins de bordelleya 😂😂</p>
+                    </div>
+                    <div class="wish-card glass-panel hidden-element slide-right delay-2">
+                        <i class="fas fa-star wish-icon text-gold"></i>
+                        <p>Que Dieu puisse te rendre indépendante financièrement et que tu puisses avoir tout ce que tu veux.</p>
+                    </div>
+                    <div class="wish-card glass-panel hidden-element slide-left delay-3">
+                        <i class="fas fa-shield-heart wish-icon text-gold"></i>
+                        <p>Une santé solide</p>
+                    </div>
+                    <div class="wish-card glass-panel hidden-element slide-left delay-4">
+                        <i class="fas fa-trophy wish-icon text-gold"></i>
+                        <p>Beaucoup d'argent ma sœur</p>
+                    </div>
+                    <div class="wish-card glass-panel hidden-element zoom-in delay-5 col-span-2">
+                        <i class="fas fa-dove wish-icon text-gold"></i>
+                        <p class="font-bold text-lg">Une vie aussi belle que ton cœur</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION POLAROID / SOUVENIRS -->
+        <section class="polaroid-section hidden-element fade-in">
+            <div class="container text-center">
+                <h3 class="font-parisienne text-glow-gold mb-md section-heading" style="font-size: 3.5rem;">Nos Souvenirs</h3>
+                <div class="polaroid-gallery">
+                    <div class="polaroid-card">
+                        <div class="polaroid-img" style="background-image: url('touti3.jpeg');"></div>
+                        <div class="polaroid-caption font-parisienne">Je t'aime</div>
+                    </div>
+                    <div class="polaroid-card">
+                        <div class="polaroid-img" style="background-image: url('touti.jpeg');"></div>
+                        <div class="polaroid-caption font-parisienne">Toujours là pour moi</div>
+                    </div>
+                    <div class="polaroid-card">
+                        <div class="polaroid-img" style="background-image: url('touti1.jpeg');"></div>
+                        <div class="polaroid-caption font-parisienne">Ma sœur de cœur ❤️</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6 - BOUTON SURPRISE -->
+        <section class="surprise-section flex-center text-center">
+            <div class="glass-panel surprise-content p-xl hidden-element zoom-in">
+                <button id="surprise-btn" class="premium-btn group relative overflow-hidden">
+                    <span class="relative z-10 transition-colors duration-300">Cliquer pour voir ce que je pense vraiment</span>
+                    <div class="btn-glow"></div>
+                </button>
+                <div id="surprise-message" class="hidden font-cormorant mt-lg text-2xl fade-in-fast">
+                    "Je n'allais quand même pas écrire ça !<br>
+                    <span class="text-glow-gold font-bold text-3xl mt-sm inline-block">Je t'aime juste 💕</span>"
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SECTION 7 - FOOTER -->
+    <footer class="glass-footer">
+        <div class="container text-center">
+            <p class="footer-message">
+                "Fait par ton amie Arlène qui t'aime de tout son cœur 💕💕💕"
+            </p>
+            <div class="footer-hearts" id="footer-hearts">
+                <i class="fas fa-heart text-red heartbeat"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
