@@ -1,24 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ================= 1. Custom Cursor ================= */
-    const cursor = document.getElementById('custom-cursor');
-    const follower = document.getElementById('custom-cursor-follower');
-    
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        
-        follower.style.left = e.clientX + 'px';
-        follower.style.top = e.clientY + 'px';
-    });
-    
-    // Hover Effects on Interactive Elements
-    const interactives = document.querySelectorAll('button, a, .envelope-wrapper, .wish-card');
-    interactives.forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
-
+    /* ================= 1. Custom Cursor (Désactivé) ================= */
     /* ================= 2. Loader ================= */
     const loader = document.getElementById('loader');
     setTimeout(() => {
@@ -28,24 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ================= 3. Theme ================= */
     // Mode sombre forcé, la logique de toggle a été retirée pour privilégier l'esthétique premium cinéma.
 
-    /* ================= 4. Music Toggle ================= */
-    const musicBtn = document.getElementById('music-toggle');
-    const bgMusic = document.getElementById('bg-music');
-    let isPlaying = false;
-
-    // S'assurer que le volume est doux
-    bgMusic.volume = 0.3;
-
-    musicBtn.addEventListener('click', () => {
-        if (isPlaying) {
-            bgMusic.pause();
-            document.body.classList.remove('music-playing');
-        } else {
-            bgMusic.play().catch(e => console.error("Audio playback failed", e));
-            document.body.classList.add('music-playing');
-        }
-        isPlaying = !isPlaying;
-    });
+    /* ================= 4. (Supprimé: Music) ================= */
 
     /* ================= 5. Scroll Progress ================= */
     const scrollProgress = document.getElementById('scroll-progress');
