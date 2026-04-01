@@ -1,6 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ================= 1. Custom Cursor (Désactivé) ================= */
+    /* ================= 1. Cinematic Spotlight ================= */
+    const spotlight = document.createElement('div');
+    spotlight.id = 'spotlight';
+    document.body.appendChild(spotlight);
+
+    document.addEventListener('mousemove', (e) => {
+        spotlight.style.setProperty('--x', e.clientX + 'px');
+        spotlight.style.setProperty('--y', e.clientY + 'px');
+    });
     /* ================= 2. Loader ================= */
     const loader = document.getElementById('loader');
     setTimeout(() => {
@@ -117,24 +125,36 @@ document.addEventListener('DOMContentLoaded', () => {
         constructor() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 3 + 1;
-            this.speedX = Math.random() * 1 - 0.5;
-            this.speedY = Math.random() * 1 - 0.5;
-            this.color = (Math.random() > 0.5) ? 'rgba(229, 9, 20, 0.6)' : 'rgba(255, 255, 255, 0.3)'; // Vibrant Red or subtle white
+            this.size = Math.random() * 5 + 3; // Bigger for petals
+            this.speedX = Math.random() * 2 - 1;
+            this.speedY = Math.random() * 2 + 1; // Falling down 
+            this.angle = Math.random() * 360;
+            this.spin = Math.random() * 0.1 - 0.05;
+            this.color = (Math.random() > 0.3) ? 'rgba(229, 9, 20, 0.7)' : 'rgba(255, 255, 255, 0.4)'; // Mostly red
         }
         update() {
-            this.x += this.speedX;
+            this.x += this.speedX + Math.sin(this.angle) * 0.5; // Sway
             this.y += this.speedY;
-            if (this.size > 0.2) this.size -= 0.01;
-
-            if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-            if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            this.angle += this.spin;
+            
+            if(this.y > canvas.height) {
+                this.y = -10;
+                this.x = Math.random() * canvas.width;
+            }
         }
         draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
             ctx.fillStyle = this.color;
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            // Drawing a petal leaf shape instead of a circle
+            ctx.moveTo(0, 0);
+            ctx.quadraticCurveTo(this.size * 2, -this.size, this.size * 3, 0);
+            ctx.quadraticCurveTo(this.size * 2, this.size, 0, 0);
+            ctx.closePath();
             ctx.fill();
+            ctx.restore();
         }
     }
 
@@ -151,12 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < particlesArray.length; i++) {
             particlesArray[i].update();
             particlesArray[i].draw();
-            // Re-spawn slightly
-            if (particlesArray[i].size <= 0.2) {
-                particlesArray[i].x = Math.random() * canvas.width;
-                particlesArray[i].y = Math.random() * canvas.height;
-                particlesArray[i].size = Math.random() * 3 + 1;
-            }
+            // Pétales tombant en continu, pas de diminution de taille
         }
         requestAnimationFrame(animateParticles);
     }
@@ -169,4 +184,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initParticles();
     animateParticles();
+
+    /* ================= 12. 3D Polaroid Tilt ================= */
+    const polaroids = document.querySelectorAll('.polaroid-card');
+    polaroids.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; // x position within the element.
+            const y = e.clientY - rect.top;  // y position within the element.
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Calculate tilt 
+            const tiltX = ((y - centerY) / centerY) * -15; // Max 15deg
+            const tiltY = ((x - centerX) / centerX) * 15;
+            
+            card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.08)`;
+            card.style.zIndex = "100";
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+            card.style.zIndex = "1";
+        });
+    });
 });
