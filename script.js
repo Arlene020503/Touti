@@ -18,7 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ================= 3. Theme ================= */
     // Mode sombre forcé, la logique de toggle a été retirée pour privilégier l'esthétique premium cinéma.
 
-    /* ================= 4. (Supprimé: Music) ================= */
+    /* ================= 4. Music Control ================= */
+    const birthdayMusic = document.getElementById('birthday-music');
+    let musicStarted = false;
+
+    // Auto-play music on first user interaction
+    const startMusic = () => {
+        if (!musicStarted && birthdayMusic) {
+            birthdayMusic.play().catch(err => console.log('Autoplay bloqué, cliquez pour démarrer'));
+            musicStarted = true;
+            // Remove listeners after first interaction
+            document.removeEventListener('click', startMusic);
+            document.removeEventListener('mousemove', startMusic);
+            document.removeEventListener('scroll', startMusic);
+            document.removeEventListener('touchstart', startMusic);
+        }
+    };
+
+    // Try to start music on various user interactions
+    document.addEventListener('click', startMusic);
+    document.addEventListener('mousemove', startMusic);
+    document.addEventListener('scroll', startMusic);
+    document.addEventListener('touchstart', startMusic);
 
     /* ================= 5. Scroll Progress ================= */
     const scrollProgress = document.getElementById('scroll-progress');
